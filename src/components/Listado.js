@@ -6,7 +6,7 @@ import Card from './Card'
 
 /* Api Key -> 3345c3b172828f6f4707e4be391adc50 */
 
-const Listado = () => {
+const Listado = (addOrRemoveFromFavs) => {
 
   let token = sessionStorage.getItem('token')
   const [ moviesList, setMoviesList ] = useState([])
@@ -33,10 +33,10 @@ const Listado = () => {
       { !token && <Navigate to="/" />} {/* Si no hay token redirige a '/' */}
 
       <div className="flex items-center justify-center min-h-screen mt-14 mb-14">
-        <div className="grid grid-cols-12 gap-2 sm:gap-10 gap-y-12 w-full sm:w-9/12">
+        <div className="grid grid-cols-12 gap-2 sm:gap-10 gap-y-12 w-full sm:w-9/12">          
 
           { moviesList.map(( movie, index ) => { 
-            return < Card movie={movie} key={index} />
+            return < Card movie={movie} key={index} addOrRemoveFromFavs={addOrRemoveFromFavs} />
           }) }          
 
         </div>

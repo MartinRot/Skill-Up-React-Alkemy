@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import FavoriteButton from './FavoriteButton';
 
-const Card = ( {movie} ) => {    
 
+const Card = ( {movie, addOrRemoveFromFavs} ) => { 
+    
     let esteno = movie.release_date;
     let estrenoFormateado = formato(esteno);
     //console.log(estrenoFormateado);
@@ -18,14 +20,14 @@ const Card = ( {movie} ) => {
         <div className="relative">
 
             {/* <!-- Image --> */}
-            <Link to={`/detalle?movieID=${movie.id}`} > 
-            <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} className="h-auto rounded-xl" alt={movie.title} />
-            </Link>
+            <Link to={`/detalle?movieID=${movie.id}`}> 
+                <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} className="h-auto rounded-xl brightness-90 hover:brightness-125" alt={movie.title} />
+            </Link>            
 
             <div
             className="absolute right-2 bottom-2 bg-gray-800 w-10 h-10 rounded-full border-sky-600  border-solid border-2  flex justify-center items-center ">
                 <div>
-                    <h1 className="text-white text-xs font-bold">{movie.vote_average}%</h1>
+                    <h1 className="text-white text-xs font-bold select-none">{movie.vote_average}%</h1>
                 </div>
             </div>
 
@@ -35,14 +37,18 @@ const Card = ( {movie} ) => {
 
             {/* <!-- Description --> */}
             <div className="flex flex-col">
-            <Link to='/detalle'>
-                <p className="text-gray-100 text-sm font-semibold">{movie.title}</p>                
-            </Link>
 
-            {/* <Link className="text-gray-400 text-xs mt-2 hover:text-gray-100" to='/'>Alkemy Studios</Link> */}
-            <p className="text-gray-400 text-xs mt-2 hover:text-gray-100 select-none" to='/'>{movie.overview.substring(0,100)} ...</p>
-            {/* <p className="text-gray-400 text-xs mt-1">241K views. 3 years ago</p> */}
-            <p className="text-gray-400 text-xs mt-1 select-none">Estreno {estrenoFormateado}</p>
+                <div className='flex justify-between items-center'>
+                    <Link to={`/detalle?movieID=${movie.id}`}>
+                        <h5 className="text-gray-100 text-sm font-semibold">{movie.title} </h5>
+                    </Link>                    
+                    <FavoriteButton addOrRemoveFromFavs={addOrRemoveFromFavs} id={movie.id} />
+                </div>
+
+                {/* <Link className="text-gray-400 text-xs mt-2 hover:text-gray-100" to='/'>Alkemy Studios</Link> */}
+                <p className="text-gray-400 text-xs mt-2 select-none" to='/'>{movie.overview.substring(0,100)} ...</p>
+                {/* <p className="text-gray-400 text-xs mt-1">241K views. 3 years ago</p> */}
+                <p className="text-gray-400 text-xs mt-1 select-none">Estreno {estrenoFormateado}</p>
             </div>
 
         </div>

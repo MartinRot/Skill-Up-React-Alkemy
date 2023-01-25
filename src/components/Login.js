@@ -17,28 +17,28 @@ const Login = () => {
         const regexEmail = /^(([^<>()[\],;:\s@]+(\.[^<>()[\],;:\s@]+)*)|(.+))@(([^<>()[\],;:\s@]+\.)+[^<>()[\],;:\s@"]{2,})$/
 
         if( email === '' || password === '' ){
-            swal('Los campos no pueden estar vacíos.');
+            swal("Los campos no pueden estar vacíos - Para más info clickea en 'olvide la contraseña'");
             return;
         }
 
         if( email !== '' && !regexEmail.test(email) ){
-            swal('Debes escribir una direccion de correo electronico valida')
+            swal("Debes escribir una direccion de correo electronico valida  - Para más info clickea en 'olvide la contraseña'")
             //console.log('Debes escribir una direccion de correo electronico valida')
             return;
         }
 
         if( email !== 'challenge@alkemy.org' || password !== 'react' ){
-            swal("Credenciales inválidas - Clickea en 'olvide la contraseña' ")
+            swal("Credenciales inválidas - Para más info clickea en 'olvide la contraseña' ")
             return;
         } else {
             axios
                 .post('http://challenge-react.alkemy.org', { email, password })
                 .then(res => {
-                    swal('¡Bienvenido a Alkemy Prime Video!')
+                    swal('¡Bienvenido a Alkemy Cinema!')
                     const tokenRecibido = res.data.token
                     sessionStorage.setItem('token', tokenRecibido)
                     //localStorage.setItem('miNombre', 'Martin')
-                    navigate("/listado");                    
+                    navigate("/listado");
                 })
         }
 
@@ -57,10 +57,10 @@ const Login = () => {
     <>
         { token && <Navigate to='/listado' /> } {/* Si tengo token voy al listado */}
 
-        <div className="flex items-center h-[88vh]">
+        <div className="flex flex-col justify-start h-[83vh] mt-14 ">
 
             <div className="flex-col flex ml-auto mr-auto items-center w-2/3 lg:w-1/3 justify-center bg-gray-800 h-3/5 drop-shadow-2xl">
-                <h1 className="font-semibold text-base md:font-bold md:text-2xl mb-10 text-white">Formulario de Login</h1>
+                <h1 className="font-semibold text-base md:font-bold md:text-2xl mb-10 text-white">LOGIN</h1>
                 <form onSubmit={submitHandler} action="" className="mt-2 flex flex-col lg:w-2/3 w-10/12">
                         
                         <p className='italic font-roboto text-white text-xs md:text-base'>Correo Electronico</p>

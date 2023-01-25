@@ -3,7 +3,13 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+
+      colors: {
+        'fondoOpacity': 'rgba(17,24,39,0.9)'
+      },
+
+    },
   },
   plugins: [],
 }

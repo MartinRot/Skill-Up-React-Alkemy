@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import axios from 'axios'
 import Loading from './Loading'
-import swal from 'sweetalert';
+import FavoriteButton from './FavoriteButton';
 
 
-const Detail = () => {
+const Detail = (addOrRemoveFromFavs) => {
 
   let token = sessionStorage.getItem('token')
   let query = new URLSearchParams(window.location.search)
@@ -21,8 +21,6 @@ const Detail = () => {
       if(!esteno) return
       return esteno.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1');
   }
-
-  const [color, setColor] = useState('text-gray-900')
 
   useEffect(() => {
     
@@ -43,25 +41,13 @@ const Detail = () => {
     
   },[movieID])
 
-  const favouriteClick = () => {
-
-    if(color==='text-gray-900'){
-      swal("Bien Hecho!", "Pelicula agregada a favoritas!", "success");
-      setColor('text-red-700')
-    } else {
-      swal(":(", "Pelicula eliminada de favoritas!");
-      setColor('text-gray-900')
-    }
-
-}  
-  
   return (
 
     <>
       { !token && <Navigate to="/" />} {/* Si no hay token redirige a '/' */}
 
       { loading? <Loading /> :
-        
+
         <div className="container px-5 py-14 mx-auto text-white min-h-[88vh]">
 
           <div className="lg:w-4/5 mx-auto flex flex-wrap justify-center items-center">
@@ -72,13 +58,7 @@ const Detail = () => {
 
               <div className='flex mb-2'>
                 <h2 className="text-xl lg:text-3xl text-gray-200 tracking-widest font-semibold lg:font-bold mr-4">{movie.title}</h2>
-                
-                <button onClick={favouriteClick} className={`flex rounded-full w-10 h-10 bg-gray-400 p-2 border-0 items-center justify-center ${color} hover:text-red-700`}>
-                  <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
-                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
-                  </svg>
-                </button>
-
+                <FavoriteButton addOrRemoveFromFavs={addOrRemoveFromFavs} />
               </div>
 
               <h1 className="text-gray-200 text-sm lg:text-xl title-font font-medium">Fecha de estreno: {estrenoFormateado}</h1>
